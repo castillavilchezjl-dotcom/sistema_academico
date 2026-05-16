@@ -1,11 +1,14 @@
 // GpaCalculator.java
-// Módulo de certificados - VERSIÓN INICIAL
-// Bug: usa promedio simple en lugar de ponderado
+// Módulo de certificados - CORREGIDO
+// Fix: calcula promedio ponderado correctamente
 public class GpaCalculator {
     public double calculate(List<Grade> grades) {
-        return grades.stream()
-                     .mapToDouble(Grade::getScore)
-                     .average()
-                     .orElse(0.0);
+        double totalScore = 0;
+        double totalCredits = 0;
+        for (Grade g : grades) {
+            totalScore   += g.getScore() * g.getCredits();
+            totalCredits += g.getCredits();
+        }
+        return totalCredits > 0 ? totalScore / totalCredits : 0.0;
     }
 }
